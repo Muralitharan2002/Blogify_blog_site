@@ -1,0 +1,29 @@
+p {
+  font-size: 19px;
+}
+
+h2 {
+  font-size: 30px;
+}
+h1 {
+  font-size: 33px;
+}
+.ql-editor ul li {
+  font-size: 19px;
+  line-height: 1.7;
+  list-style: circle;
+  list-style-position: inside;
+  list-style-type: square;
+}
+
+ol li {
+  margin-left: 10px;
+  font-size: 17px;
+  line-height: 1.7;
+  list-style: decimal;
+  list-style-position: inside;
+}
+
+img {
+  width: 100%;
+}
