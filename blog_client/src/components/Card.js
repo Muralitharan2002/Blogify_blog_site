@@ -14,7 +14,7 @@ export default function Cards({ FilterBlogs }) {
                         <div key={key} className=" text-white rounded-xl col-span-1 row-span-1 bg-gradient-to-t from-blue-700 to-black p-[1px] overflow-hidden">
                             <Link to={`/blog/${item._id}`} className="bg-black rounded-xl overflow-hidden h-full flex flex-col ">
                                 <div className=" h-52 rounded-[8px] overflow-hidden m-2">
-                                    <img src={item.Image} alt="" className="w-full h-full aspect-[4/3] object-cover" />
+                                    <img src={item.Image} alt="" className="w-full h-full aspect-[4/3] object-cover" loading="lazy" />
                                 </div>
                                 <div className="mt-6 px-3">
 

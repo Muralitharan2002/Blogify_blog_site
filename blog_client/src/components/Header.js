@@ -27,7 +27,7 @@ export default function Header() {
     }
 
     const checkLogin = () => {
-        const status = localStorage.getItem("status")
+        const status = sessionStorage.getItem("status")
         if (!status) return dispatch(RemoveStatus()) && dispatch(RemoveFirstName()) && dispatch(RemoveLastName())
     }
 
@@ -70,11 +70,11 @@ export default function Header() {
                         Menu && <div className={`absolute lg:hidden md:hidden top-0 left-0 w-full h-screen bg-[#000003b4] z-30`} onClick={() => MenuOff()}></div>
                     }
 
-                    <div className={` px-4 xl:flex md:flex justify-center gap-8 text-slate-400  sm:hidden hidden ${Menu ? "navbar" : ""}`}>
-                        <NavLink to={"/"} className="hover:text-white duration-300">Home</NavLink>
-                        <NavLink to={"/blog"} className="hover:text-white duration-300">Blog</NavLink>
-                        <NavLink to={"/create"} className="hover:text-white duration-300">Create</NavLink>
-                        <NavLink to={"/About"} className="hover:text-white duration-300">About</NavLink>
+                    <div className={` px-4 xl:flex md:flex justify-center gap-8 text-slate-400 duration-500 sm:hidden hidden ${Menu ? "navbar" : ""}`}>
+                        <NavLink to={"/"} onClick={() => MenuOff()} className="hover:text-white duration-300">Home</NavLink>
+                        <NavLink to={"/blog"} onClick={() => MenuOff()} className="hover:text-white duration-300">Blog</NavLink>
+                        <NavLink to={"/create"} onClick={() => MenuOff()} className="hover:text-white duration-300">Create</NavLink>
+                        {/* <NavLink to={"/About"} onClick={() => MenuOff()} className="hover:text-white duration-300">About</NavLink> */}
                     </div>
                     <div className="flex items-center">
                         {
@@ -88,7 +88,7 @@ export default function Header() {
 
                                         <div onClick={dropdownOn} className="absolute rounded-md bg-slate-800 left-[-20px] top-[60px] w-20 py-2 flex flex-col">
                                             <NavLink to={"/profile"} className="text-[16px px-2 duration-300 hover:text-slate-400 cursor-pointer">Profile</NavLink>
-                                            <p onClick={logout} className="mt-2 text-[16px] px-2 hover:text-slate-400 duration-300 cursor-pointer" >Log out</p>
+                                            <p onClick={() => logout()} className="mt-2 text-[16px] px-2 hover:text-slate-400 duration-300 cursor-pointer" >Log out</p>
                                         </div>
                                     }
 
@@ -104,7 +104,7 @@ export default function Header() {
                                 </>
                         }
 
-                        <div className=" text-2xl ml-4 hidden menubar"><CgMenuRightAlt onClick={() => { MenuOn() }} /></div>
+                        <div className=" text-2xl ml-4 lg:hidden md:hidden "><CgMenuRightAlt onClick={() => { MenuOn() }} /></div>
                     </div>
 
                 </div>

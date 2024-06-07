@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom'
 
 function SecureAuth({ children }) {
     const auth = useSelector((state) => state.authDetails.isLogin)
-    console.log(auth)
+    // console.log(auth)
 
     if (!auth) {
         return <Navigate to={"/"} />

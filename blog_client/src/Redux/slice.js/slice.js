@@ -1,9 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit"
 
+const userLogin = sessionStorage.getItem("status") === "true"
+// console.log(userLogin, "slice")
+
 const initialState = {
     firstname: "",
     lastname: "",
-    isLogin: sessionStorage.getItem("status") === true
+    isLogin: userLogin
 }
 
 const userSlice = createSlice({

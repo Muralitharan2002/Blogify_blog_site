@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Cards from "../components/Card";
 import Loader from "../components/Loader";
 import { RiSearchEyeLine } from "react-icons/ri";
@@ -7,7 +7,6 @@ import axios from "axios"
 import "../Global.css"
 import Filter from "../components/Filter";
 
-// const Cards = lazy(() => import("../components/Card"))
 
 export default function Blog() {
     const inputRef = useRef()
@@ -17,7 +16,7 @@ export default function Blog() {
     // const [Empty, setEmpty] = useState(true)
 
     const category = ["All", ...new Set(AllBlogs.map((item) => item.category))]
-    // console.log(FilterBlogs)
+    console.log(AllBlogs)
 
 
     const FilterItems = (selectedCategory) => {
@@ -36,8 +35,8 @@ export default function Blog() {
                     console.log(res.data)
                 } else {
                     // setEmpty(false)
-                    setAllBlogs(res.data)
-                    setFilterBlogs(res.data)
+                    setAllBlogs(res.data.blogs)
+                    setFilterBlogs(res.data.blogs)
                 }
             })
             .catch((err) => {
@@ -52,6 +51,9 @@ export default function Blog() {
     }, [])
 
     const searchBlog = async (e) => {
+
+        if (!inputRef.current.value) return setFilterBlogs(AllBlogs)
+
         if (e.type === "keydown" && e.key !== "Enter") return;
 
         await axios.get(BackendUrl + `/user/blogs?post=${inputRef.current.value}`, { withCredentials: true })

@@ -5,6 +5,7 @@ import { BackendUrl } from './BackendUrl';
 import parse from "html-react-parser"
 import { formateDate } from './formateDate';
 import "../blog.css"
+import ClipLoader from "react-spinners/ClipLoader";
 
 
 function BlogPage() {
@@ -12,13 +13,16 @@ function BlogPage() {
     const { id } = useParams();
     const navigate = useNavigate()
     const [post, setPost] = useState(null)
+    const [loader, setLoader] = useState(false)
 
     const fetchBlog = async () => {
+        setLoader(true)
         await axios.get(BackendUrl + `/user/post/${id}`, { withCredentials: true })
             .then((res) => {
-                console.log(post ? post : "")
+                // console.log(post ? post : "")
                 if (res.data.status === "success") {
                     setPost(res.data.data)
+                    setLoader(false)
                 } else if (res.data.status === "failed") {
                     navigate("/login")
                 } else {
@@ -38,8 +42,16 @@ function BlogPage() {
         <>
             <div className='text-white mt-24 mx-3'>
                 {
-                    post ?
-                        <div className=' max-w-[800px] mx-auto lg:px-3 md:px-3 sm:px-3 px-1 py-4'>
+                    loader ?
+                        <div className='min-h-[500px] flex pt-20  justify-center'>
+                            <ClipLoader
+                                color='#636363'
+                                size={45}
+                            />
+                        </div>
+                        :
+                        post &&
+                        <div className=' max-w-[800px] min-h-[500px] mx-auto lg:px-3 md:px-3 sm:px-3 px-1 py-4'>
                             <div className='lg:text-4xl md:text-3xl sm:text-3xl text-2xl'>{post.title}</div>
                             <div className='mt-5 flex items-center justify-between'>
                                 <div className='flex items-center gap-3'>
@@ -56,16 +68,16 @@ function BlogPage() {
                             <div className='h-[1px] w-full bg-slate-600 mt-4'></div>
 
                             <div className='mt-7 w-full'>
-                                <img src={post.Image} alt="" className='w-full max-h-[500px] rounded-md' />
+                                <img src={post.Image} alt="" className='w-full max-h-[500px] rounded-md' loading='lazy' />
                             </div>
 
                             <div className='mt-7 text-slate-300'>
                                 {parse(post.content)}
                             </div>
 
-                        </div> :
-                        "loading...."
+                        </div>
                 }
+
             </div>
         </>
     )

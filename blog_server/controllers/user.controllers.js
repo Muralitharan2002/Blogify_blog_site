@@ -132,7 +132,7 @@ const publicBlogs = async (req, res) => {
         } else {
             blogs = await blogModel.find()
             // if (!blogs) return res.json({ message: "Blogs not post yet", status: "failed" })
-            return res.send(blogs)
+            return res.json({ message: "getAll public blogs", status: "success", blogs })
         }
     } catch (err) {
         return res.json({ message: "while getting publicblog err", status: "error", Error: err.message })
@@ -199,24 +199,25 @@ const update = async (req, res) => {
         const { title, category, content } = req.body
         const Image = req.file?.path
 
-        console.log({ title, category, content, Image, blogId, _id, firstname, lastname })
+        // console.log({ title, category, content, Image, blogId, _id, firstname, lastname })
 
         if (!_id && !blogId) return res.json({ message: "auth user not found", status: "failed" })
 
-        const updatedBlog = await blogModel.findOneAndUpdate({ _id: blogId, bloggerId: _id }, {
-            $set: {
-                title,
-                content,
-                Image: Image ? await uploadImage(Image) : "https://res.cloudinary.com/dr1behckb/image/upload/v1717166457/noImage_tmnr3v.jpg",
-                category
-            }
-        }, { new: true });
+        const ExistingBlog = await blogModel.findOne({ _id: blogId, bloggerId: _id })
 
-        if (!updatedBlog) {
-            return res.status(404).json({ message: "Blog not found or unauthorized to update", status: "failed" });
+
+        if (title === ExistingBlog.title && content === ExistingBlog.content && category === ExistingBlog.category && !Image) {
+            return res.json({ message: "you nothing update!", status: "failed" });
         }
 
-        return res.json({ message: "Blog updated", status: "success", update: updatedBlog });
+        ExistingBlog.title = title
+        ExistingBlog.category = category
+        ExistingBlog.content = content
+        ExistingBlog.Image = Image ? await uploadImage(Image) : ExistingBlog.Image
+
+        await ExistingBlog.save()
+
+        return res.json({ message: "Blog updated", status: "success" });
 
     } catch (err) {
         return res.json({ message: "while updating Post err", status: "error", Error: err.message })

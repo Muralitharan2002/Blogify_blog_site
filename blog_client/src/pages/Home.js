@@ -1,6 +1,10 @@
 import CustomizedAccordions from "../components/Accordion";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 export default function Home() {
+    const isLogin = useSelector((item) => item.authDetails.isLogin)
+    console.log(isLogin)
     return (
         <>
 
@@ -16,9 +20,16 @@ export default function Home() {
                     Blogify is your online haven, where stories come alive and knowledge thrives. Dive into a world of imagination and insight, tailored just for you.
                 </p>
 
-                <button className="py-2 px-4 z-10 rounded-full font-mainfont lg:text-2xl md:text-2xl sm:text-xl text-lg text-slate-400 hover:text-white duration-300 bg-transparent mt-10 Customshadow backdrop-blur-sm">
-                    Get Started
-                </button>
+                {
+                    isLogin ?
+                        <Link to={"/create"} className="py-2 px-4 z-10 rounded-full font-mainfont lg:text-2xl md:text-2xl sm:text-xl text-lg text-slate-400 hover:text-white duration-300 bg-transparent mt-10 Customshadow backdrop-blur-sm">
+                            Build Your Own Blog
+                        </Link>
+                        :
+                        <Link to={"/login"} className="py-2 px-4 z-10 rounded-full font-mainfont lg:text-2xl md:text-2xl sm:text-xl text-lg text-slate-400 hover:text-white duration-300 bg-transparent mt-10 Customshadow backdrop-blur-sm">
+                            Get Started
+                        </Link>
+                }
 
             </div>
 

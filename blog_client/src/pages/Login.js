@@ -52,12 +52,12 @@ export default function Login() {
 
         await axios.post(BackendUrl + "/user/login", Fields, { withCredentials: true })
             .then(async (res) => {
-                console.log(res.data)
+                // console.log(res.data)
                 if (res.data.status === "success") {
                     dispatch(setFirstName(res.data.firstname))
                     dispatch(setLastName(res.data.lastname))
                     dispatch(setStatus())
-                    sessionStorage.setItem("status", true);
+                    sessionStorage.setItem("status", "true");
                     setsubmitted(true)
                     setAlert(res.data.message)
                     setTimeout(() => {

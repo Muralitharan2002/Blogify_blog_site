@@ -160,8 +160,10 @@ export default function CreateBlog() {
                             <label htmlFor="category" className='text-slate-500 lg:text-2xl md:text-2xl sm:text-2xl text-xl'>Blog image :</label>
                             <div className='w-full mt-4 rounded-md border-slate-500 mx-auto min-h-60 border overflow-hidden'>
                                 {
-                                    Preview &&
-                                    <img src={Preview} alt="" className='w-full h-full object-cover' />
+                                    Preview ?
+                                        <img src={Preview} alt="" className='w-full h-full object-cover' />
+                                        :
+                                        <div className='flex items-center justify-center min-h-56 text-5xl opacity-5 font-bold'>preview</div>
                                 }
                             </div>
 

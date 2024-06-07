@@ -48,24 +48,24 @@ export default function Profile({ children }) {
                 <div className="flex lg:flex-nowrap md:flex-wrap flex-wrap gap-5">
 
                     <div className=" lg:border-r lg:border-b-0 md:border-b  border-slate-800 lg:w-72 w-full lg:h-96 md:h-64 h-60 flex lg:flex-col lg:gap-0 md:gap-10 sm:gap-10 gap-7 items-center justify-center items-center flex-wrap">
-                        <div className="w-32 h-32 rounded-full flex justify-center items-center bg-gradient-to-b from-blue-600 to-slate-800 cursor-pointer">
+                        <div className="lg:w-32 md:w-32 sm:w-32 w-24  lg:h-32 md:h-32 sm:h-32 h-24 rounded-full flex justify-center items-center bg-gradient-to-b from-blue-600 to-slate-800 cursor-pointer">
                             <p className="text-6xl">{lastname}</p>
                         </div>
 
 
                         <div>
                             <div className="lg:mt-5">
-                                <div className="text-slate-500">@{firstname}</div>
                                 <div className="text-3xl">{firstname + " " + lastname}</div>
+                                <div className="text-slate-500">@{firstname}</div>
                             </div>
 
                             <div className="lg:mt-8 md:mt-4 mt-4">
-                                <button disabled={disable} onClick={logout} className={` w-48 py-2 rounded-md ${disable ? " opacity-60 cursor-not-allowed" : ""} shadow-inner shadow-slate-500`}>Log out</button>
+                                <button disabled={disable} onClick={() => logout()} className={` w-48 py-2 rounded-md ${disable ? " opacity-60 cursor-not-allowed" : ""} shadow-inner shadow-slate-500`}>Log out</button>
                             </div>
                         </div>
                     </div>
 
-                    <div className="lg:w-[75%] md:w-full w-full px-5 ">
+                    <div className="lg:w-[75%] md:w-full w-full lg:px-5 md:px-5 sm:px-5 px-3 lg:mt-0 md:mt-0 sm:mt-0 mt-10">
                         <h2 className="text-3xl border-b pb-5 border-slate-800">My Blogs</h2>
                         <div className="mt-5  max-h-[500px] overflow-y-scroll">
                             {children}

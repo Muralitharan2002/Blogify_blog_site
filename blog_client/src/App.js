@@ -10,6 +10,7 @@ import Profile from "./pages/Profile";
 import BlogPage from "./components/BlogPage";
 import SecureAuth from "./components/SecureAuth";
 import ProfileCards from "./components/ProfileCards";
+import EditBlog from "./pages/EditBlog";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="signup" element={<Signup />} />
             <Route path="profile" element={<SecureAuth><Profile><ProfileCards /></Profile></SecureAuth>} />
             <Route path="/blog/:id" element={<BlogPage />} />
+            <Route path="/edit/:id" element={<EditBlog />} />
           </Route>
         </Routes>
       </div>

@@ -20,6 +20,10 @@ body {
   outline: none;
 }
 
+.active {
+  color: white;
+}
+
 .ql-toolbar,
 .ql-container {
   border: 1px solid rgb(100, 116, 139) !important;
