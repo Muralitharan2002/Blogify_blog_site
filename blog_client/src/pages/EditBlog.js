@@ -165,9 +165,11 @@ export default function EditBlog() {
                     setContent(res.data.data.content)
                     setPreview(res.data.data.Image)
                     setLoader(false)
-                } else if (res.data.status === "failed") {
+                }
+                else if (res.data.status === "failed") {
                     navigate("/login")
-                } else {
+                }
+                else {
                     console.log(res.data)
                 }
             }).catch((err) => {
@@ -243,7 +245,7 @@ export default function EditBlog() {
                                 </div>
 
                                 <div>
-                                    <button type='submit' disabled={Disable} className={`border cursor-pointer ${Disable ? " opacity-60 cursor-not-allowed" : ""} lg:py-2 md:py-2 py-1 w-full rounded-md border-slate-600 mt-16 shadow-inner shadow-blue-500 text-xl`}>Update</button>
+                                    <button type='submit' disabled={Disable} className={`border cursor-pointer ${Disable ? " opacity-60 cursor-not-allowed" : ""} text-slate-400 hover:text-white duration-300 lg:py-2 md:py-2 py-1 w-full rounded-md border-slate-600 mt-16 shadow-inner shadow-blue-500 text-xl`}>Update</button>
                                 </div>
 
                             </div>

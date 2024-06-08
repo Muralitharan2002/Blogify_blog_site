@@ -194,7 +194,7 @@ export default function CreateBlog() {
                         </div>
 
                         <div>
-                            <button type='submit' disabled={Disable} className={`border cursor-pointer ${Disable ? " opacity-60 cursor-not-allowed" : ""} lg:py-2 md:py-2 py-1 w-full rounded-md border-slate-600 mt-16 shadow-inner shadow-blue-500 text-xl`}>Create</button>
+                            <button type='submit' disabled={Disable} className={`border ${Disable ? " opacity-60 cursor-not-allowed" : " cursor-pointer"} text-slate-400 hover:text-white duration-300 lg:py-2 md:py-2 py-1 w-full rounded-md border-slate-600 mt-16 shadow-inner shadow-blue-500 text-xl`}>Create</button>
                         </div>
 
                     </div>

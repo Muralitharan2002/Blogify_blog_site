@@ -6,6 +6,7 @@ import { BackendUrl } from "../components/BackendUrl"
 import axios from "axios"
 import "../Global.css"
 import Filter from "../components/Filter";
+import { AnimatePresence } from "framer-motion"
 
 
 export default function Blog() {
@@ -16,7 +17,7 @@ export default function Blog() {
     // const [Empty, setEmpty] = useState(true)
 
     const category = ["All", ...new Set(AllBlogs.map((item) => item.category))]
-    console.log(AllBlogs)
+    // console.log(AllBlogs)
 
 
     const FilterItems = (selectedCategory) => {
@@ -85,7 +86,11 @@ export default function Blog() {
             <Filter category={category} FilterItems={FilterItems} />
 
 
-            {loading ? <Loader /> : <Cards FilterBlogs={FilterBlogs} />}
+            {loading ? <Loader /> :
+                <AnimatePresence>
+                    <Cards FilterBlogs={FilterBlogs} />
+                </AnimatePresence>
+            }
 
 
         </>

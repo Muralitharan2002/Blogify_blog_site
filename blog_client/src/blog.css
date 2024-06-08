@@ -8,12 +8,13 @@ h2 {
 h1 {
   font-size: 26px;
 }
-.ql-editor ul li {
+ul li {
   font-size: 19px;
   line-height: 1.7;
   list-style: circle;
   list-style-position: inside;
-  list-style-type: square;
+  padding-left: 10px;
+  /* list-style-type: square; */
 }
 
 ol li {

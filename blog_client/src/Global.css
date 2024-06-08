@@ -82,7 +82,20 @@ body {
     align-items: center;
     top: 0;
     right: 0;
-    border: 2px solid black;
+    background-color: black;
+    height: 100vh;
+    width: 250px;
+    padding: 50px 10px;
+    z-index: 1000;
+  }
+  .navbar2 {
+    display: flex !important;
+    position: absolute;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    top: 0;
+    right: -300px;
     background-color: black;
     height: 100vh;
     width: 250px;

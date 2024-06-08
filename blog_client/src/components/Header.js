@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RemoveFirstName, RemoveLastName, RemoveStatus } from "../Redux/slice.js/slice"
 import { BackendUrl } from "../components/BackendUrl"
 import axios from "axios"
+import { AnimatePresence, motion } from "framer-motion"
 
 
 export default function Header() {
@@ -70,12 +71,14 @@ export default function Header() {
                         Menu && <div className={`absolute lg:hidden md:hidden top-0 left-0 w-full h-screen bg-[#000003b4] z-30`} onClick={() => MenuOff()}></div>
                     }
 
-                    <div className={` px-4 xl:flex md:flex justify-center gap-8 text-slate-400 duration-500 sm:hidden hidden ${Menu ? "navbar" : ""}`}>
+                    <motion.div className={` px-4 xl:flex md:flex justify-center gap-8 text-slate-400 duration-500 sm:hidden hidden ${Menu ? "navbar" : "navbar2"}`}
+
+                    >
                         <NavLink to={"/"} onClick={() => MenuOff()} className="hover:text-white duration-300">Home</NavLink>
                         <NavLink to={"/blog"} onClick={() => MenuOff()} className="hover:text-white duration-300">Blog</NavLink>
                         <NavLink to={"/create"} onClick={() => MenuOff()} className="hover:text-white duration-300">Create</NavLink>
                         {/* <NavLink to={"/About"} onClick={() => MenuOff()} className="hover:text-white duration-300">About</NavLink> */}
-                    </div>
+                    </motion.div>
                     <div className="flex items-center">
                         {
                             (status && firstname && lastname) ?
@@ -83,14 +86,21 @@ export default function Header() {
                                     <div className=" w-8 h-8 rounded-full flex justify-center items-center bg-gradient-to-b from-blue-600 to-slate-800 cursor-pointer">
                                         <p className="text-lg">{lastname}</p>
                                     </div>
-                                    {
-                                        AccMenu &&
+                                    <AnimatePresence>
+                                        {
+                                            AccMenu &&
 
-                                        <div onClick={dropdownOn} className="absolute rounded-md bg-slate-800 left-[-20px] top-[60px] w-20 py-2 flex flex-col">
-                                            <NavLink to={"/profile"} className="text-[16px px-2 duration-300 hover:text-slate-400 cursor-pointer">Profile</NavLink>
-                                            <p onClick={() => logout()} className="mt-2 text-[16px] px-2 hover:text-slate-400 duration-300 cursor-pointer" >Log out</p>
-                                        </div>
-                                    }
+                                            <motion.div onClick={dropdownOn} className="absolute rounded-md bg-slate-800 left-[-20px] top-[60px] w-20 py-2 flex flex-col"
+                                                initial={{ scale: 0, opacity: 0, originY: 0 }}
+                                                animate={{ scale: 1, opacity: 1, originY: 0 }}
+                                                exit={{ scale: 0, opacity: 0, originY: 0 }}
+                                                transition={{ duration: .3, delay: 0.1 }}
+                                            >
+                                                <NavLink to={"/profile"} className="text-[16px px-2 duration-300 hover:text-slate-400 cursor-pointer">Profile</NavLink>
+                                                <p onClick={() => logout()} className="mt-2 text-[16px] px-2 hover:text-slate-400 duration-300 cursor-pointer" >Log out</p>
+                                            </motion.div>
+                                        }
+                                    </AnimatePresence>
 
                                 </div>
                                 :
