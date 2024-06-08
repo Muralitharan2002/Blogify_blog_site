@@ -24,7 +24,7 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
             <Route path="profile" element={<SecureAuth><Profile><ProfileCards /></Profile></SecureAuth>} />
-            <Route path="/blog/:id" element={<BlogPage />} />
+            <Route path="/blog/:id" element={<SecureAuth><BlogPage /></SecureAuth>} />
             <Route path="/edit/:id" element={<SecureAuth><EditBlog /></SecureAuth>} />
           </Route>
         </Routes>
