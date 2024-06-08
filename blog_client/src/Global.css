@@ -111,7 +111,3 @@ body {
 ::-webkit-scrollbar {
   display: none;
 }
-
-.tool-block:hover .tool {
-  right: 0;
-}

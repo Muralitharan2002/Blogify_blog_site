@@ -63,7 +63,7 @@ export default function ProfileCards() {
                     <div className=" mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-5 overflow-y-auto">
                         {
                             blogs && blogs.map((item, key) => (
-                                <div key={key} className="relative text-white rounded-xl bg-gradient-to-t from-blue-700 to-black p-[1px] overflow-hidden tool-block">
+                                <div key={key} className="relative text-white rounded-xl bg-gradient-to-t from-blue-700 to-black p-[1px] overflow-hidden">
                                     <Link to={`/blog/${item._id}`} className="bg-black rounded-xl overflow-hidden h-full flex flex-col ">
                                         <div className=" h-52 rounded-[8px] overflow-hidden m-2">
                                             <img src={item.Image} alt="" className="w-full h-full aspect-[4/3] object-cover" loading="lazy" />
@@ -89,7 +89,7 @@ export default function ProfileCards() {
                                             </div>
                                         </div>
                                     </Link>
-                                    <div className="tool text-green-500 text-4xl absolute top-56 -right-32 duration-300 flex">
+                                    <div className=" text-green-500 lg:text-3xl md:text-3xl sm:text-3xl text-2xl absolute top-56 right-2 mt-5 flex">
                                         <Link to={`/edit/${item._id}`}><BiSolidMessageSquareEdit /></Link>
                                         <MdDelete className="text-red-700 cursor-pointer" onClick={() => deleteBlog(item._id)} />
                                     </div>
