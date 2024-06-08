@@ -7,7 +7,7 @@ function SecureAuth({ children }) {
     // console.log(auth)
 
     if (!auth) {
-        return <Navigate to={"/"} />
+        return <Navigate to={"/login"} />
     }
 
     return (
