@@ -35,7 +35,7 @@ Use the following credentials to log in:
 
 1. **Clone the repository**:
     ```sh
-    git clone https://github.com/your-username/blogify.git
+    git clone https://github.com/Muralitharan2002/Blogify_blog_site.git
     ```
 
 2. **Install server dependencies**:
