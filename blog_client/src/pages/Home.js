@@ -1,7 +1,6 @@
 import CustomizedAccordions from "../components/Accordion";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 
 export default function Home() {
     const isLogin = useSelector((item) => item.authDetails.isLogin)

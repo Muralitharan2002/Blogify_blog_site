@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { CgMenuRightAlt } from "react-icons/cg";
 import { useSelector, useDispatch } from "react-redux";
 import { RemoveFirstName, RemoveLastName, RemoveStatus } from "../Redux/slice.js/slice"
@@ -63,9 +63,11 @@ export default function Header() {
         <>
             <div className="flex items-center justify-center z-50 relative">
                 <div className="text-white fixed w-[91%] py-2 top-5 Customshadow  rounded-full px-5 flex items-center justify-between backdrop-blur navbar-container z-40" >
-                    <div className="bg-bgtext bg-clip-text text-transparent text-3xl">
-                        Blogify
-                    </div>
+                    <Link to={"/"}>
+                        <div className="bg-bgtext bg-clip-text text-transparent text-3xl">
+                            Blogify
+                        </div>
+                    </Link>
 
                     {
                         Menu && <div className={`absolute lg:hidden md:hidden top-0 left-0 w-full h-screen bg-[#000003b4] z-30`} onClick={() => MenuOff()}></div>
