@@ -8,20 +8,15 @@ const route = require('./routers/user.route')
 const app = express()
 const port = process.env.PORT || 8080
 
-const http = require("http")
-const server = http.createServer(app)
-const { Server } = require("socket.io")
+// const http = require("http")
+// const server = http.createServer(app)
+// const { Server } = require("socket.io")
 
-const io = new Server(server, {
-    cors: {
-        origin: "https://blogify-blog-site.vercel.app",
-        methods: ["GET", "POST"],
-        credentials: true
-    }
-})
+
 
 app.use(cors({
     origin: "https://blogify-blog-site.vercel.app",
+    // origin: "http://localhost:3000",
     credentials: true
 }))
 
@@ -37,13 +32,24 @@ app.get("/", (req, res) => {
 
 app.use("/user", route)
 
-io.on("connection", (socket) => {
-    console.log("server socket", socket.id)
-})
 
-server.listen(port, (err) => {
+const server = app.listen(port, (err) => {
     if (err) console.log("Server Error", err)
     console.log("server running ....")
+})
+
+const io = require("socket.io")(server, {
+    pingTimeout: 60000,
+    cors: {
+        origin: "https://blogify-blog-site.vercel.app",
+        // origin: "http://localhost:3000",
+        methods: ["GET", "POST"],
+        credentials: true
+    }
+})
+
+io.on("connection", (socket) => {
+    console.log("server socket", socket.id)
 })
 
 exports.io = io
