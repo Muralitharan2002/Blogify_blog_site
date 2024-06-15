@@ -15,7 +15,7 @@ const port = process.env.PORT || 8080
 
 
 app.use(cors({
-    origin: "https://blogify-blog-site.vercel.app",
+    origin: ["https://blogify-blog-site.vercel.app", "http://localhost:3000"],
     // origin: "http://localhost:3000",
     credentials: true
 }))
@@ -41,7 +41,7 @@ const server = app.listen(port, (err) => {
 const io = require("socket.io")(server, {
     pingTimeout: 60000,
     cors: {
-        origin: "https://blogify-blog-site.vercel.app",
+        origin: ["https://blogify-blog-site.vercel.app", "http://localhost:3000"],
         // origin: "http://localhost:3000",
         methods: ["GET", "POST"],
         credentials: true
