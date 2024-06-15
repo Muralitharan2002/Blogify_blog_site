@@ -25,4 +25,10 @@ route.delete("/drop", authentication, controller.drop)
 
 route.put("/update", authentication, upload.single("file"), controller.update)
 
+route.put("/Reaction", authentication, controller.Reaction)
+
+route.put("/RemoveReaction", authentication, controller.RemoveReaction)
+
+route.post("/PostComment", authentication, controller.AddComment)
+
 module.exports = route

@@ -53,18 +53,15 @@ export default function Signup() {
                         navigate("/login");
                     }, 1000);
 
-                } else if (res.data.status === "failed") {
+                } else {
                     setsubmitted(true)
                     setAlert("Already have an account! go to sign in page")
                     setTimeout(() => {
                         setsubmitted(false)
                         setAlert("")
+                        navigate("/login")
                     }, 1000);
-                    navigate("/login")
-                } else {
-                    console.log(res.data)
                 }
-
             })
             .catch((err) => {
                 console.log("signup form error", err.message)

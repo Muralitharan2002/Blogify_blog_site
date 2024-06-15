@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
-import { RemoveFirstName, RemoveLastName, RemoveStatus } from "../Redux/slice.js/slice"
+import { RemoveAuthId, RemoveFirstName, RemoveLastName, RemoveStatus } from "../Redux/slice.js/slice"
 import axios from "axios"
 import { BackendUrl } from "../components/BackendUrl"
 
@@ -11,7 +11,7 @@ import { BackendUrl } from "../components/BackendUrl"
 export default function Profile({ children }) {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const [disable, setDisable] = useState()
+    const [disable, setDisable] = useState(false)
     const firstname = useSelector((state) => state.authDetails.firstname)
     const lastname = useSelector((state) => state.authDetails.lastname)
 
@@ -20,9 +20,10 @@ export default function Profile({ children }) {
         setDisable(true)
         await axios.post(BackendUrl + "/user/signout", {}, { withCredentials: true })
             .then(async (res) => {
-                console.log(res.data)
+                // console.log(res.data)
                 if (res.data.status === "success") {
                     // setLoginStatus(false)
+                    dispatch(RemoveAuthId())
                     dispatch(RemoveFirstName())
                     dispatch(RemoveLastName())
                     dispatch(RemoveStatus())
@@ -47,7 +48,7 @@ export default function Profile({ children }) {
             <div className="text-white lg:mt-32 md:mt-32 sm:mt-32 mt-20 lg:mx-20 md:mx-10">
                 <div className="flex lg:flex-nowrap md:flex-wrap flex-wrap gap-5">
 
-                    <div className=" lg:border-r lg:border-b-0 md:border-b  border-slate-800 lg:w-72 w-full lg:h-96 md:h-64 h-60 flex lg:flex-col lg:gap-0 md:gap-10 sm:gap-10 gap-7 items-center justify-center items-center flex-wrap">
+                    <div className=" lg:border-r lg:border-b-0 md:border-b  border-slate-800 lg:w-72 w-full lg:h-96 md:h-64 h-60 flex lg:flex-col lg:gap-0 md:gap-10 sm:gap-10 gap-7 items-center justify-center flex-wrap">
                         <div className="lg:w-32 md:w-32 sm:w-32 w-24  lg:h-32 md:h-32 sm:h-32 h-24 rounded-full flex justify-center items-center bg-gradient-to-b from-blue-600 to-slate-800 cursor-pointer">
                             <p className="text-6xl">{lastname}</p>
                         </div>

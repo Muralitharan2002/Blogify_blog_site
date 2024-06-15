@@ -109,5 +109,10 @@ body {
 }
 
 ::-webkit-scrollbar {
-  display: none;
+  width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(111, 111, 111);
+  border-radius: 10px;
 }

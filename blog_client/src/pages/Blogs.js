@@ -41,7 +41,7 @@ export default function Blog() {
                 }
             })
             .catch((err) => {
-                console.log("Error in all Blogs component", err.message)
+                console.log("Error in all Blogs component", err)
             }).finally(() => {
                 setLoading(false)
             })

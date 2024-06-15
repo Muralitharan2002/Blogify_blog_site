@@ -4,12 +4,13 @@ const bcrypt = require('bcrypt')
 const jwt = require("jsonwebtoken")
 const blogModel = require('../models/blog.model')
 const uploadImage = require('../utils/uploadImage')
+const main = require('../index')
 
 
 const signup = async (req, res) => {
     try {
         const { firstname, lastname, email, password } = req.body
-        console.log({ firstname, lastname, email, password })
+        // console.log({ firstname, lastname, email, password })
 
         const exist = await userModel.findOne({ email })
 
@@ -23,7 +24,7 @@ const signup = async (req, res) => {
         return res.json({ message: "user already exist", status: "failed" })
 
     } catch (err) {
-        res.json({ message: "user signup error", Error: err.message, status: "error" })
+        return res.status(500).json({ message: "user signup error", Error: err.message, status: "error" })
     }
 }
 
@@ -44,6 +45,7 @@ const login = async (req, res) => {
             process.env.JWT_KEY
         )
 
+        const authId = exist?._id
         const firstname = exist?.firstname
         const lastname = exist?.lastname
 
@@ -53,11 +55,11 @@ const login = async (req, res) => {
             httpOnly: true
         })
 
-        return res.json({ message: "sign in successfully", status: "success", firstname, lastname })
+        return res.json({ message: "sign in successfully", status: "success", authId, firstname, lastname })
 
     } catch (err) {
         console.log("while user login err", err.message)
-        return res.json({ message: "while user login err", status: "error", Error: err.message })
+        return res.status(500).json({ message: "while user login err", status: "error", Error: err.message })
     }
 }
 
@@ -78,7 +80,7 @@ const login = async (req, res) => {
 const signout = async (req, res) => {
     try {
         const { _id } = req.authuser
-        console.log(_id)
+        // console.log(_id)
 
         if (_id) {
             res.clearCookie("token")
@@ -88,7 +90,7 @@ const signout = async (req, res) => {
         return res.json({ message: "logout function failed", status: "error" })
 
     } catch (err) {
-        return res.json({ message: "Error while signout", status: "error", Error: err.message })
+        return res.status(500).json({ message: "Error while signout", status: "error", Error: err.message })
     }
 }
 
@@ -116,7 +118,7 @@ const create = async (req, res) => {
         return res.json({ message: "Blog Created", status: "success" })
 
     } catch (err) {
-        return res.json({ message: "while create blog err", status: "error", Error: err.message })
+        return res.status(500).json({ message: "while create blog err", status: "error", Error: err.message })
     }
 }
 
@@ -135,7 +137,7 @@ const publicBlogs = async (req, res) => {
             return res.json({ message: "getAll public blogs", status: "success", blogs })
         }
     } catch (err) {
-        return res.json({ message: "while getting publicblog err", status: "error", Error: err.message })
+        return res.status(500).json({ message: "while getting publicblog err", status: "error", Error: err.message })
     }
 }
 
@@ -150,7 +152,7 @@ const AuthBlogs = async (req, res) => {
         return res.json({ status: "success", blogs })
 
     } catch (err) {
-        return res.json({ message: "while getting publicblog err", status: "error", Error: err.message })
+        return res.status(500).json({ message: "while getting publicblog err", status: "error", Error: err.message })
     }
 }
 
@@ -168,7 +170,7 @@ const post = async (req, res) => {
         return res.json({ message: "post not found", status: "error", Error: err.message })
 
     } catch (err) {
-        return res.json({ message: "while getting Post err", status: "error", Error: err.message })
+        return res.status(500).json({ message: "while getting Post err", status: "error", Error: err.message })
     }
 }
 
@@ -187,7 +189,7 @@ const drop = async (req, res) => {
         return res.json({ message: "Deleted", status: "success" })
 
     } catch (err) {
-        return res.json({ message: "while deleting blog Error", status: "error", Error: err.message })
+        return res.status(500).json({ message: "while deleting blog Error", status: "error", Error: err.message })
     }
 }
 
@@ -220,8 +222,80 @@ const update = async (req, res) => {
         return res.json({ message: "Blog updated", status: "success" });
 
     } catch (err) {
-        return res.json({ message: "while updating Post err", status: "error", Error: err.message })
+        return res.status(500).json({ message: "while updating Post err", status: "error", Error: err.message })
     }
 }
 
-module.exports = { signup, login, signout, create, publicBlogs, post, AuthBlogs, drop, update }
+
+const Reaction = async (req, res) => {
+    try {
+        const { _id } = req.authuser
+
+        if (!_id) return res.json({ message: "authuser not found", status: "failed" })
+
+        const { blogId } = req.query
+
+        const blog = await blogModel.findByIdAndUpdate({ _id: blogId }, { $addToSet: { Likes: _id } }, { new: true })
+
+        main.io.emit("Like_Post", blog.Likes)
+
+        return res.json({ status: "success", Likes: blog.Likes })
+
+
+
+    } catch (err) {
+        return res.status(500).json({ message: "Error in Reaction process", status: "error", error: err.message })
+    }
+}
+
+const RemoveReaction = async (req, res) => {
+    try {
+        const { _id } = req.authuser
+
+        if (!_id) return res.json({ message: "authuser not found", status: "failed" })
+
+        const { blogId } = req.query
+
+        const blog = await blogModel.findByIdAndUpdate({ _id: blogId }, { $pull: { Likes: _id } }, { new: true })
+
+        main.io.emit("unLike_Post", blog.Likes)
+
+        return res.json({ status: "success", Likes: blog.Likes })
+
+    } catch (err) {
+        return res.status(500).json({ message: "Error in Reaction process", status: "error", error: err })
+    }
+}
+
+const AddComment = async (req, res) => {
+    try {
+        const { _id, firstname, lastname } = req.authuser
+
+        if (!_id) return res.json({ message: "authuser not found", status: "failed" })
+
+        const { blogId } = req.query
+        const { text } = req.body
+
+        const blog = await blogModel.findOne({ _id: blogId })
+
+        blog.Comments.unshift({
+            text,
+            postedBy: {
+                bloggerId: _id,
+                firstname,
+                lastname
+            }
+        })
+
+        await blog.save()
+
+        main.io.emit("postComments", blog.Comments)
+
+        return res.json({ message: "commet added", status: "success", comments: blog.Comments })
+
+    } catch (err) {
+        return res.status(500).json({ message: "server Error in Addcomment process", status: "error", Error: err.message })
+    }
+}
+
+module.exports = { signup, login, signout, create, publicBlogs, post, AuthBlogs, drop, update, Reaction, RemoveReaction, AddComment }

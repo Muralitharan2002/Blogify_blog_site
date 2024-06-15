@@ -5,7 +5,7 @@ import { BackendUrl } from "../components/BackendUrl";
 import axios from "axios"
 
 import { useDispatch } from "react-redux"
-import { setFirstName, setLastName, setStatus } from "../Redux/slice.js/slice";
+import { setAuthId, setFirstName, setLastName, setStatus } from "../Redux/slice.js/slice";
 
 
 
@@ -54,6 +54,7 @@ export default function Login() {
             .then(async (res) => {
                 // console.log(res.data)
                 if (res.data.status === "success") {
+                    dispatch(setAuthId(res.data.authId))
                     dispatch(setFirstName(res.data.firstname))
                     dispatch(setLastName(res.data.lastname))
                     dispatch(setStatus())
@@ -65,15 +66,13 @@ export default function Login() {
                         setAlert("")
                         navigate("/", { replace: true })
                     }, 2000);
-                } else if (res.data.status === "failed") {
+                } else {
                     setsubmitted(false)
                     setAlert(res.data.message)
                     setTimeout(() => {
                         setsubmitted(false)
                         setAlert("")
                     }, 3000);
-                } else {
-                    console.log(res.data)
                 }
 
             })

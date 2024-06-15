@@ -28,7 +28,27 @@ const blogSchema = new mongoose.Schema({
     Image: {
         type: String,
         required: true,
-    }
+    },
+    Likes: [
+        {
+            type: mongoose.Types.ObjectId,
+            ref: "user"
+        }
+    ],
+    Comments: [
+        {
+            text: String,
+            postedBy: {
+                bloggerId: mongoose.Types.ObjectId,
+                firstname: String,
+                lastname: String
+            },
+            created: {
+                type: Date,
+                default: Date.now,
+            }
+        }
+    ]
 }, { timestamps: true })
 
 blogSchema.index({ title: "text", content: "text" })

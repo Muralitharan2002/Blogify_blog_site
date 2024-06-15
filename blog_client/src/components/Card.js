@@ -10,16 +10,10 @@ export default function Cards({ FilterBlogs }) {
         <>
 
 
-            <motion.div className="mt-14 w-[90%] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-            // layout
-            // initial={{ opacity: 0 }}
-            // animate={{ opacity: 1 }}
-            // exit={{ opacity: 0 }}
-            // transition={{ duration: 0.9 }}
-            >
+            <motion.div className="mt-14 w-[90%] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 <AnimatePresence>
                     {
-                        FilterBlogs && FilterBlogs.map((item, key) => (
+                        FilterBlogs?.map((item, key) => (
                             // <Link key={key} to={"/blog/"} className="h-full">
                             <motion.div key={key} className=" text-white rounded-xl col-span-1 row-span-1 bg-gradient-to-t from-blue-700 to-black p-[1px] overflow-hidden"
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { CgMenuRightAlt } from "react-icons/cg";
 import { useSelector, useDispatch } from "react-redux";
-import { RemoveFirstName, RemoveLastName, RemoveStatus } from "../Redux/slice.js/slice"
+import { RemoveAuthId, RemoveFirstName, RemoveLastName, RemoveStatus } from "../Redux/slice.js/slice"
 import { BackendUrl } from "../components/BackendUrl"
 import axios from "axios"
 import { AnimatePresence, motion } from "framer-motion"
@@ -41,6 +41,7 @@ export default function Header() {
                 console.log(res.data)
                 if (res.data.status === "success") {
                     // setLoginStatus(false)
+                    dispatch(RemoveAuthId())
                     dispatch(RemoveFirstName())
                     dispatch(RemoveLastName())
                     dispatch(RemoveStatus())

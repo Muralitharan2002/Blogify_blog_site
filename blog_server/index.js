@@ -5,9 +5,30 @@ const cookieParser = require("cookie-parser")
 const dbConnect = require('./config/db')
 const route = require('./routers/user.route')
 
+const app = express()
 const port = process.env.PORT || 8080
 
-const app = express()
+const http = require("http")
+const server = http.createServer(app)
+const { Server } = require("socket.io")
+
+const io = new Server(server, {
+    cors: {
+        origin: "https://blogify-blog-site.vercel.app",
+        credentials: true
+    }
+})
+
+io.on("connection", (socket) => {
+    console.log("server socket", socket.id)
+})
+
+exports.io = io
+
+
+
+
+
 
 app.use(cors({
     origin: "https://blogify-blog-site.vercel.app",
@@ -25,7 +46,7 @@ app.get("/", (req, res) => {
 
 app.use("/user", route)
 
-app.listen(port, (err) => {
+server.listen(port, (err) => {
     if (err) console.log("Server Error", err)
     console.log("server running ....")
 })

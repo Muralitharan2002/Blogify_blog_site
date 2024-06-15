@@ -34,7 +34,7 @@ export default function ProfileCards() {
     }, [])
 
     const deleteBlog = async (blogId) => {
-        console.log(blogId)
+        // console.log(blogId)
         await axios.delete(BackendUrl + `/user/drop?blogId=${blogId}`, { withCredentials: true })
             .then((res) => {
                 if (res.data.status === "success") {
