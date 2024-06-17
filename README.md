@@ -1,19 +1,20 @@
 # Blogify
 
-Blogify is a comprehensive blog platform developed with the MERN stack (MongoDB, Express.js, React.js, Node.js). It utilizes JWT for secure authentication, enabling users to view all blogs, create their own posts using the React Quill editor, and manage their profiles and blog entries. The user interface is designed with Tailwind CSS for a modern and responsive experience.
+Blogify is a full-featured blog website created using the MERN stack (MongoDB, Express, React, Node.js). This project includes secure JWT authentication, comprehensive CRUD operations, real-time updates with Socket.io, and a customizable text editor for users to create and personalize their own blogs using React Quill editor.
 
 ## Features
 
 - **User Authentication**: Secure user authentication using JSON Web Tokens (JWT).
 - **Blog Management**: Users can create, read, update, and delete their own blogs.
 - **Profile Page**: Users can view their profile information.
-- **Rich Text Editor**: Implemented using React Quill for creating and editing blogs.
-- **Responsive Design**: Built with Tailwind CSS to ensure a responsive and modern user interface.
+- **Likes and Comments**: Users can like and comment on blogs.
+- **Real-Time Updates**: Real-time updates for likes and comments using Socket.io.
+- **Rich Text Editor**: Create and customize blog posts with a rich text editor using React Quill.
 
 ## Tech Stack
 
-- **Frontend**: React.js, React Quill, Tailwind CSS
-- **Backend**: Node.js, Express.js
+- **Frontend**: React.js, React Quill, Tailwind CSS, Socket.io-client
+- **Backend**: Node.js, Express.js, Socket.io
 - **Database**: MongoDB
 - **Authentication**: JWT (JSON Web Tokens)
 
@@ -91,5 +92,10 @@ Use the following credentials to log in:
    - Browse all blogs on the homepage.
    - Click on any blog to read it in detail.
 
-4. **Manage Your Blogs**:
+4. **Interact with Blogs:**
+
+   - Like and comment on blog posts in real-time.
+
+5. **Manage Your Blogs**:
+
    - Visit your profile page to view, edit, or delete your own blogs.
